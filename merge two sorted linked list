@@ -1,0 +1,30 @@
+/*
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+Example:
+
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+*/
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+        
+    if(a==NULL) return b;
+    if(b==NULL) return a;
+    ListNode *res;
+    if(a->val<b->val)
+    {
+        res=a;
+        res->next= mergeTwoLists(a->next,b);
+        return res;
+    }
+    else
+    {
+        res=b;
+        res->next= mergeTwoLists(a,b->next);
+        return res;
+    }
+}
+};
