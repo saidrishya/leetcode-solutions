@@ -1,0 +1,45 @@
+/*
+Write a function that takes a string as input and reverse only the vowels of a string.
+
+Example 1:
+
+Input: "hello"
+Output: "holle"
+Example 2:
+
+Input: "leetcode"
+Output: "leotcede"
+Note:
+The vowels does not include the letter "y".
+*/
+
+class Solution {
+public:
+    string reverseVowels(string s) {
+        int low=0 , high=s.size()-1;
+        while(low<high){
+            if(isvowel(s[low]) && isvowel(s[high])) 
+            {
+                char ch= s[low];
+                s[low]=s[high];
+                s[high]=ch;
+                low++;
+                high--;
+            }
+            else if(isvowel(s[low]) && !isvowel(s[high]))
+            {
+                high--;
+            }
+            else{
+                low++;
+            }
+        }
+return s;
+    }
+private:
+     bool isvowel(char ch){
+         char c=tolower(ch);
+          if(c== 'a' || c== 'e' || c== 'i' || c== 'o' || c== 'u' ) return true;
+         else return false;
+     }
+};
