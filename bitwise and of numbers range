@@ -1,0 +1,46 @@
+/*
+Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+
+Example 1:
+
+Input: [5,7]
+Output: 4
+Example 2:
+
+Input: [0,1]
+Output: 0
+*/
+
+class Solution {  
+public:
+    int rangeBitwiseAnd(int n, int m) {
+    /*int res=0;
+        while(m && n){
+       int a=msb(m);
+        int b=msb(n);
+        if(a!=b) break;
+           int msbval = 1<<a;
+            res=res+a;
+            m-=msbval;
+            n-=msbval;
+            
+    }
+return res;*/
+        
+        while(n<m){
+            m-= (m & -m);
+        }
+return m;
+        
+}
+    
+    /*private:
+    int msb(int n){
+        int c=0;
+        while(n){
+            n=n>>1;
+            c++;
+        }
+    return c;
+    }*/
+};
