@@ -1,0 +1,58 @@
+/*
+Given the root of a binary tree, each node in the tree has a distinct value.
+
+After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees).
+
+Return the roots of the trees in the remaining forest.  You may return the result in any order.
+
+ 
+
+Example 1:
+
+
+
+Input: root = [1,2,3,4,5,6,7], to_delete = [3,5]
+Output: [[1,2,null,4],[6],[7]]
+ 
+
+Constraints:
+
+The number of nodes in the given tree is at most 1000.
+Each node has a distinct value between 1 and 1000.
+to_delete.length <= 1000
+to_delete contains distinct values between 1 and 1000.
+*/
+
+class Solution {
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        List<TreeNode> remaining = new ArrayList<>();
+        Set<Integer> toDelete = new HashSet<>();
+        for(int i : to_delete){
+            toDelete.add(i);
+        }
+        removeNodes(root,remaining, toDelete);
+        if(!toDelete.contains(root.val)){
+            remaining.add(root);
+        }
+        return remaining;
+    } //basically following a bottom up approach(dfs) as in top down we might lose links
+    
+    public TreeNode removeNodes(TreeNode root, List<TreeNode> remaining , Set<Integer> m){
+        if(root == null){
+            return null;
+        }
+        root.left = removeNodes(root.left, remaining, m);
+        root.right = removeNodes(root.right, remaining, m);
+        if(m.contains(root.val)){
+            if(root.left!= null){
+                remaining.add(root.left);
+            }
+            if(root.right!= null){
+                remaining.add(root.right);
+            }
+             return null;
+        }
+        return root;
+       
+    }
+}
