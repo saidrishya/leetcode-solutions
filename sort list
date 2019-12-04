@@ -1,0 +1,52 @@
+/*
+Sort a linked list in O(n log n) time using constant space complexity.
+
+Example 1:
+
+Input: 4->2->1->3
+Output: 1->2->3->4
+Example 2:
+
+Input: -1->5->3->4->0
+Output: -1->0->3->4->5
+*/
+
+class Solution {
+public:
+    ListNode* merge(ListNode *a, ListNode *b){
+        ListNode *c = new ListNode(-1);
+        ListNode *t=c;
+        while(a && b){
+            if(a->val < b->val){
+                c->next=a;
+                a=a->next;
+            }else{
+                c->next=b;
+                b=b->next;
+            }
+            c=c->next;
+        }
+        if(a==NULL) c->next=b;
+        if(b==NULL) c->next=a;
+        return t->next;
+        
+    } 
+    
+    ListNode* sort(ListNode *head){
+        if(!head || !head->next) return head;
+        ListNode *slow=head, *fast=head;
+        while(!fast->next && !fast->next->next){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        ListNode *p =slow->next;
+        slow->next=NULL;
+        ListNode *a = sort(head);
+        ListNode *b = sort(p);
+        return merge(a,b);
+    }       
+    
+    ListNode* sortList(ListNode* head) {
+        return sort(head);
+    }
+};
