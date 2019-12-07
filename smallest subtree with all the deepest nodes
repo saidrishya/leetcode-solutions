@@ -1,0 +1,64 @@
+/*
+Given a binary tree rooted at root, the depth of each node is the shortest distance to the root.
+
+A node is deepest if it has the largest depth possible among any node in the entire tree.
+
+The subtree of a node is that node, plus the set of all descendants of that node.
+
+Return the node with the largest depth such that it contains all the deepest nodes in its subtree.
+
+ 
+
+Example 1:
+
+Input: [3,5,1,6,2,0,8,null,null,7,4]
+Output: [2,7,4]
+Explanation:
+
+
+
+We return the node with value 2, colored in yellow in the diagram.
+The nodes colored in blue are the deepest nodes of the tree.
+The input "[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4]" is a serialization of the given tree.
+The output "[2, 7, 4]" is a serialization of the subtree rooted at the node with value 2.
+Both the input and output have TreeNode type.
+ 
+
+Note:
+
+The number of nodes in the tree will be between 1 and 500.
+The values of each node are unique.
+*/
+
+
+class Solution {
+public:
+     pair<TreeNode *, int> getDeeper(TreeNode *root, int depth){
+        if(!root){
+            return pair<TreeNode*, int> (root,0);
+        }
+        if(!root->left && !root->right){
+            return pair<TreeNode*, int>(root,1);
+        }
+        auto left = getDeeper(root->left,depth);
+        auto right = getDeeper(root->right, depth);
+        
+        if(left.second > right.second){
+            return pair<TreeNode*, int> (left.first, left.second+1);
+        }
+        else if(left.second < right.second){
+            return pair<TreeNode*, int> (right.first, right.second+1);
+        }
+        else return pair<TreeNode*, int> (root, left.second+1);
+        
+    }
+        
+    
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        if(!root) return NULL;
+        pair<TreeNode *, int> ans = getDeeper(root,0);
+        return ans.first;
+    }
+    
+   
+};
